@@ -25,10 +25,10 @@ export default function App() {
   };
 
   return (
-    <div className="size-full bg-gradient-to-b from-gray-50 to-white overflow-hidden">
+    <div className="min-h-screen w-full bg-gradient-to-b from-gray-50 to-white">
       <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none" />
 
-      <div className="relative size-full max-w-md mx-auto overflow-y-auto">
+      <div className="relative w-full max-w-full md:max-w-4xl lg:max-w-6xl mx-auto overflow-y-auto pb-24">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}

@@ -31,19 +31,19 @@ const weekComparison = [
 
 export default function AnalyticsPage() {
   return (
-    <div className="pb-24 px-4 pt-6">
+    <div className="pb-24 px-4 md:px-6 lg:px-8 pt-6">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-6"
       >
-        <h1 className="text-3xl font-display mb-1 bg-gradient-to-r from-[var(--energy-blue-dark)] to-[var(--energy-cyan)] bg-clip-text text-transparent">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-display mb-1 bg-gradient-to-r from-[var(--energy-blue-dark)] to-[var(--energy-cyan)] bg-clip-text text-transparent">
           Análisis Detallado
         </h1>
         <p className="text-sm text-gray-500">Consumo, costos y tendencias</p>
       </motion.div>
 
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -83,11 +83,12 @@ export default function AnalyticsPage() {
         </motion.div>
       </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="bg-white rounded-2xl p-5 shadow-lg border border-[var(--border)] mb-6"
+        className="bg-white rounded-2xl p-5 shadow-lg border border-[var(--border)]"
       >
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-display text-[var(--energy-blue-dark)]">Consumo Mensual</h3>
@@ -138,7 +139,7 @@ export default function AnalyticsPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white rounded-2xl p-5 shadow-lg border border-[var(--border)] mb-6"
+        className="bg-white rounded-2xl p-5 shadow-lg border border-[var(--border)]"
       >
         <h3 className="font-display mb-4 text-[var(--energy-blue-dark)]">Tendencia Horaria</h3>
         <div className="flex gap-3 mb-3 text-xs">
@@ -237,6 +238,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
       </motion.div>
+      </div>
     </div>
   );
 }

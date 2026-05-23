@@ -93,20 +93,21 @@ export default function AIAssistantPage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="px-4 pt-6 pb-4 bg-gradient-to-br from-[var(--energy-blue-dark)] to-[var(--energy-blue-medium)] text-white"
+        className="px-4 md:px-6 lg:px-8 pt-6 pb-4 bg-gradient-to-br from-[var(--energy-blue-dark)] to-[var(--energy-blue-medium)] text-white"
       >
         <div className="flex items-center gap-3 mb-2">
           <div className="p-2.5 bg-white/20 rounded-xl backdrop-blur-sm">
             <Sparkles size={24} />
           </div>
           <div>
-            <h1 className="text-2xl font-display">Asistente IA</h1>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-display">Asistente IA</h1>
             <p className="text-xs text-white/80">Análisis inteligente de energía</p>
           </div>
         </div>
       </motion.div>
 
-      <div className="flex-1 overflow-y-auto px-4 pt-4 pb-4">
+      <div className="flex-1 overflow-y-auto px-4 md:px-6 lg:px-8 pt-4 pb-4">
+        <div className="max-w-3xl mx-auto">
         <AnimatePresence>
           {messages.map((message, index) => (
             <motion.div
@@ -179,13 +180,14 @@ export default function AIAssistantPage() {
         )}
 
         <div ref={messagesEndRef} />
+        </div>
       </div>
 
       {messages.length === 1 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="px-4 pb-4"
+          className="px-4 md:px-6 lg:px-8 pb-4"
         >
           <p className="text-xs text-gray-500 mb-3">Sugerencias rápidas:</p>
           <div className="flex flex-wrap gap-2">
@@ -206,7 +208,7 @@ export default function AIAssistantPage() {
         </motion.div>
       )}
 
-      <div className="px-4 pb-4 bg-white border-t border-gray-200">
+      <div className="px-4 md:px-6 lg:px-8 pb-4 bg-white border-t border-gray-200">
         <div className="flex items-center gap-2 pt-3">
           <input
             type="text"

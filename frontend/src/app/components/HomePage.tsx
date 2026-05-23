@@ -39,7 +39,7 @@ function MetricCard({ icon, label, value, unit, trend, trendValue, featured }: M
       animate={{ opacity: 1, y: 0 }}
       className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${
         featured
-          ? 'from-[var(--energy-blue-light)] to-[var(--energy-cyan)] text-white col-span-2 p-6'
+          ? 'from-[var(--energy-blue-light)] to-[var(--energy-cyan)] text-white col-span-2 md:col-span-2 lg:col-span-3 p-6'
           : 'from-white to-gray-50 border border-[var(--border)] p-5'
       } shadow-lg`}
     >
@@ -76,13 +76,13 @@ function MetricCard({ icon, label, value, unit, trend, trendValue, featured }: M
 
 export default function HomePage() {
   return (
-    <div className="pb-24 px-4 pt-6">
+    <div className="pb-24 px-4 md:px-6 lg:px-8 pt-6">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-6"
       >
-        <h1 className="text-3xl font-display mb-2 bg-gradient-to-r from-[var(--energy-blue-dark)] to-[var(--energy-cyan)] bg-clip-text text-transparent">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-display mb-2 bg-gradient-to-r from-[var(--energy-blue-dark)] to-[var(--energy-cyan)] bg-clip-text text-transparent">
           Panel de Energía
         </h1>
         <div className="flex gap-2 mt-4">
@@ -104,7 +104,7 @@ export default function HomePage() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
         <MetricCard
           icon={<Zap size={24} />}
           label="Voltaje"

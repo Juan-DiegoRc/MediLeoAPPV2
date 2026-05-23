@@ -18,9 +18,9 @@ export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
     <motion.div
       initial={{ y: 100 }}
       animate={{ y: 0 }}
-      className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-gray-200 px-2 pb-safe"
+      className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-t border-gray-200 px-2 pb-safe"
     >
-      <div className="flex justify-around items-center h-16 max-w-md mx-auto">
+      <div className="flex justify-around items-center h-16 md:h-20 max-w-3xl mx-auto">
         {navItems.map((item, index) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -42,18 +42,18 @@ export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
                 />
               )}
               <div className="relative z-10">
-                <Icon
-                  size={22}
-                  className={`transition-colors ${
-                    isActive
-                      ? 'text-[var(--energy-blue-medium)]'
-                      : 'text-gray-400'
-                  }`}
-                  strokeWidth={isActive ? 2.5 : 2}
-                />
+              <Icon
+                size={isActive ? 24 : 22}
+                className={`transition-colors md:w-6 md:h-6 ${
+                  isActive
+                    ? 'text-[var(--energy-blue-medium)]'
+                    : 'text-gray-400'
+                }`}
+                strokeWidth={isActive ? 2.5 : 2}
+              />
               </div>
               <span
-                className={`text-xs relative z-10 transition-colors ${
+                className={`text-xs md:text-sm relative z-10 transition-colors ${
                   isActive
                     ? 'text-[var(--energy-blue-dark)] font-display'
                     : 'text-gray-500'

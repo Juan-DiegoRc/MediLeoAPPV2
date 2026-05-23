@@ -123,13 +123,13 @@ export default function AlertsPage() {
   const resolvedAlerts = alerts.filter(a => a.resolved);
 
   return (
-    <div className="pb-24 px-4 pt-6">
+    <div className="pb-24 px-4 md:px-6 lg:px-8 pt-6">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-6"
       >
-        <h1 className="text-3xl font-display mb-1 bg-gradient-to-r from-[var(--energy-blue-dark)] to-[var(--energy-cyan)] bg-clip-text text-transparent">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-display mb-1 bg-gradient-to-r from-[var(--energy-blue-dark)] to-[var(--energy-cyan)] bg-clip-text text-transparent">
           Alertas
         </h1>
         <p className="text-sm text-gray-500">Monitoreo de eventos y anomalías</p>
@@ -139,7 +139,7 @@ export default function AlertsPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="grid grid-cols-3 gap-3 mb-6"
+        className="grid grid-cols-3 lg:grid-cols-6 gap-3 mb-6"
       >
         <div className="bg-gradient-to-br from-red-500 to-rose-600 rounded-xl p-4 text-white shadow-lg">
           <div className="text-2xl font-display mb-1">
@@ -166,7 +166,7 @@ export default function AlertsPage() {
           <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
           Alertas Activas ({activeAlerts.length})
         </h3>
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           {activeAlerts.map((alert, idx) => (
             <AlertCard key={alert.id} alert={alert} index={idx} />
           ))}
@@ -185,7 +185,7 @@ export default function AlertsPage() {
           <CheckCircle size={14} />
           Resueltas ({resolvedAlerts.length})
         </h3>
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           {resolvedAlerts.map((alert, idx) => (
             <AlertCard key={alert.id} alert={alert} index={idx} />
           ))}
