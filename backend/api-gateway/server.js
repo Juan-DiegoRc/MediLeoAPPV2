@@ -2,9 +2,9 @@ require('dotenv').config();
 
 const http = require('http');
 
-const app = require('./src/app');
+const app = require('./app');
 
-const { initializeSocket } = require('./src/config/socket');
+const { initializeSocket } = require('./config/socket');
 
 
 const requiredEnvVars = [

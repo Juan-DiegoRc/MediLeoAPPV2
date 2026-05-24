@@ -1,17 +1,31 @@
-import { Zap, TrendingUp, TrendingDown, Activity, Thermometer, Gauge } from 'lucide-react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { Zap, TrendingUp, TrendingDown, Activity, Thermometer, Gauge, Wifi, WifiOff } from 'lucide-react';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
+  ResponsiveContainer, Area, AreaChart
+} from 'recharts';
 import { motion } from 'motion/react';
-
-const realTimeData = [
-  { time: '00:00', power: 245 },
-  { time: '04:00', power: 189 },
-  { time: '08:00', power: 412 },
-  { time: '12:00', power: 523 },
-  { time: '16:00', power: 487 },
-  { time: '20:00', power: 356 },
-  { time: '24:00', power: 298 },
-];
-
+ 
+type Metric = {
+  device_id?: string;
+  voltage?: number;
+  current?: number;
+  power?: number;
+  energy?: number;
+  temperature?: number;
+  potencia?: number;
+  voltaje?: number;
+  corriente?: number;
+  energia?: number;
+  temperatura?: number;
+  timestamp: string | number | Date;
+  [key: string]: any;
+};
+ 
+interface HomePageProps {
+  metrics?: Metric[];
+  connected?: boolean;
+}
+ 
 const comparisonData = [
   { day: 'Lun', consumption: 45 },
   { day: 'Mar', consumption: 52 },
@@ -21,7 +35,7 @@ const comparisonData = [
   { day: 'Sáb', consumption: 42 },
   { day: 'Dom', consumption: 35 },
 ];
-
+ 
 interface MetricCardProps {
   icon: React.ReactNode;
   label: string;
@@ -31,7 +45,7 @@ interface MetricCardProps {
   trendValue: string;
   featured?: boolean;
 }
-
+ 
 function MetricCard({ icon, label, value, unit, trend, trendValue, featured }: MetricCardProps) {
   return (
     <motion.div
@@ -73,8 +87,28 @@ function MetricCard({ icon, label, value, unit, trend, trendValue, featured }: M
     </motion.div>
   );
 }
-
-export default function HomePage() {
+ 
+export default function HomePage({ metrics = [], connected = false }: HomePageProps) {
+  const latest = metrics[0];
+ 
+  // Soporta campos en inglés (simulador) y español (ESP32)
+  const voltage = latest?.voltage ?? latest?.voltaje;
+  const current = latest?.current ?? latest?.corriente;
+  const power = latest?.power ?? latest?.potencia;
+  const energy = latest?.energy ?? latest?.energia;
+  const temperature = latest?.temperature ?? latest?.temperatura;
+ 
+  const hasData = !!latest;
+ 
+  // Últimas 20 métricas para el gráfico (orden cronológico)
+  const chartData = [...metrics]
+    .slice(0, 20)
+    .reverse()
+    .map((m, i) => ({
+      time: i === metrics.slice(0, 20).length - 1 ? 'ahora' : `${metrics.slice(0, 20).length - 1 - i * 3}s`,
+      power: m.power ?? m.potencia ?? 0,
+    }));
+ 
   return (
     <div className="pb-24 px-4 md:px-6 lg:px-8 pt-6">
       <motion.div
@@ -82,9 +116,19 @@ export default function HomePage() {
         animate={{ opacity: 1, y: 0 }}
         className="mb-6"
       >
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-display mb-2 bg-gradient-to-r from-[var(--energy-blue-dark)] to-[var(--energy-cyan)] bg-clip-text text-transparent">
-          Panel de Energía
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-display mb-2 bg-gradient-to-r from-[var(--energy-blue-dark)] to-[var(--energy-cyan)] bg-clip-text text-transparent">
+            Panel de Energía
+          </h1>
+          <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-display ${
+            connected
+              ? 'bg-emerald-50 text-emerald-700'
+              : 'bg-gray-100 text-gray-500'
+          }`}>
+            {connected ? <Wifi size={14} /> : <WifiOff size={14} />}
+            {connected ? 'En vivo' : 'Desconectado'}
+          </div>
+        </div>
         <div className="flex gap-2 mt-4">
           {['Hoy', 'Semana', 'Mes'].map((filter, idx) => (
             <motion.button
@@ -103,68 +147,73 @@ export default function HomePage() {
           ))}
         </div>
       </motion.div>
-
+ 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
         <MetricCard
           icon={<Zap size={24} />}
           label="Voltaje"
-          value="220"
+          value={hasData && voltage != null ? voltage.toFixed(1) : '—'}
           unit="V"
           trend="up"
-          trendValue="2.1%"
+          trendValue="live"
         />
         <MetricCard
           icon={<Activity size={24} />}
           label="Corriente"
-          value="12.5"
+          value={hasData && current != null ? current.toFixed(2) : '—'}
           unit="A"
           trend="down"
-          trendValue="1.3%"
+          trendValue="live"
         />
         <MetricCard
           icon={<Gauge size={24} />}
           label="Potencia"
-          value="2.75"
+          value={power != null ? (power / 1000).toFixed(3) : '—'}
           unit="kW"
           trend="up"
-          trendValue="5.2%"
+          trendValue="live"
           featured
         />
         <MetricCard
           icon={<Zap size={24} />}
           label="Energía"
-          value="156"
+          value={hasData && energy != null ? energy.toFixed(3) : '—'}
           unit="kWh"
           trend="up"
-          trendValue="3.8%"
+          trendValue="live"
         />
         <MetricCard
           icon={<Thermometer size={24} />}
           label="Temperatura"
-          value="42"
+          value={hasData && temperature != null ? temperature.toFixed(1) : '—'}
           unit="°C"
           trend="down"
-          trendValue="0.5%"
+          trendValue="live"
         />
         <MetricCard
           icon={<Activity size={24} />}
-          label="Factor Potencia"
-          value="0.92"
+          label="Muestras"
+          value={metrics.length.toString()}
           unit=""
           trend="up"
-          trendValue="1.1%"
+          trendValue="total"
         />
       </div>
-
+ 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
         className="bg-white rounded-2xl p-5 shadow-lg border border-[var(--border)] mb-6"
       >
-        <h3 className="font-display mb-4 text-[var(--energy-blue-dark)]">Consumo en Tiempo Real</h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-display text-[var(--energy-blue-dark)]">Potencia en Tiempo Real</h3>
+          {!hasData && (
+            <span className="text-xs text-gray-400">Esperando datos del backend...</span>
+          )}
+        </div>
         <ResponsiveContainer width="100%" height={200}>
-          <AreaChart data={realTimeData}>
+          <AreaChart data={chartData.length > 0 ? chartData : [{ time: '—', power: 0 }]}>
             <defs>
               <linearGradient id="powerGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="var(--energy-gradient-start)" stopOpacity={0.8} />
@@ -180,6 +229,7 @@ export default function HomePage() {
             <YAxis
               stroke="#94a3b8"
               style={{ fontSize: '12px', fontFamily: 'var(--font-body)' }}
+              tickFormatter={(v) => `${v}W`}
             />
             <Tooltip
               contentStyle={{
@@ -188,6 +238,7 @@ export default function HomePage() {
                 borderRadius: '12px',
                 boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
               }}
+              formatter={(v: unknown) => [`${Number(v).toFixed(1)} W`, 'Potencia']}
             />
             <Area
               type="monotone"
@@ -195,11 +246,12 @@ export default function HomePage() {
               stroke="var(--energy-blue-light)"
               strokeWidth={3}
               fill="url(#powerGradient)"
+              isAnimationActive={false}
             />
           </AreaChart>
         </ResponsiveContainer>
       </motion.div>
-
+ 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

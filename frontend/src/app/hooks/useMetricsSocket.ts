@@ -14,11 +14,13 @@ export function useMetricsSocket({ url = 'http://localhost:3000', token }: { url
   const [metrics, setMetrics] = useState<Metric[]>([]);
 
   useEffect(() => {
-    const opts: any = { transports: ['websocket'] };
+    const opts: any = {};
     if (token) opts.auth = { token };
 
     const socket = io(url, opts);
     socketRef.current = socket;
+
+    console.log('Intentando conectar a:', url);
 
     socket.on('connect', () => setConnected(true));
     socket.on('disconnect', () => setConnected(false));
