@@ -100,7 +100,7 @@ export default function HomePage({ metrics = [], connected = false }: HomePagePr
  
   const hasData = !!latest;
  
-  // Últimas 20 métricas para el gráfico (orden cronológico)
+
   const chartData = [...metrics]
     .slice(0, 20)
     .reverse()

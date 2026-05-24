@@ -5,6 +5,7 @@ const http = require('http');
 const app = require('./app');
 
 const { initializeSocket } = require('./config/socket');
+const { startMetricsSimulation } = require('./simulacion/metricsSimulator');
 
 
 const requiredEnvVars = [
@@ -36,6 +37,9 @@ const server = http.createServer(app);
 
 
 initializeSocket(server);
+
+// Inicia el simulador de métricas
+startMetricsSimulation();
 
 server.listen(PORT, () => {
   console.log('====================================');

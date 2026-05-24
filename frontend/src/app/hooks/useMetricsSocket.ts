@@ -22,10 +22,14 @@ export function useMetricsSocket({ url = 'http://localhost:3000', token }: { url
 
     console.log('Intentando conectar a:', url);
 
-    socket.on('connect', () => setConnected(true));
+    socket.on('connect', () => {
+      console.log('✅ conectado', socket.id);
+      setConnected(true);
+    });
     socket.on('disconnect', () => setConnected(false));
 
     socket.on('metrics:update', (payload: Metric) => {
+      console.log('📊 datos recibidos:', payload);
       setMetrics((prev) => [payload, ...prev].slice(0, 100));
     });
 
