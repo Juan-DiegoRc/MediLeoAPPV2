@@ -39,18 +39,18 @@ initializeSocket(server);
 
 server.listen(PORT, () => {
   console.log('====================================');
-  console.log(`🚀 Backend running on port ${PORT}`);
-  console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL}`);
-  console.log(`📡 MQTT Broker: ${process.env.MQTT_BROKER_URL}`);
-  console.log(`📨 MQTT Topic: ${process.env.MQTT_TOPIC}`);
+  console.log(`Backend running on port ${PORT}`);
+  console.log(`Frontend URL: ${process.env.FRONTEND_URL}`);
+  console.log(`MQTT Broker: ${process.env.MQTT_BROKER_URL}`);
+  console.log(`MQTT Topic: ${process.env.MQTT_TOPIC}`);
   console.log('====================================');
 });
 
 
 process.on('uncaughtException', (error) => {
-  console.error('❌ Uncaught Exception:', error);
+  console.error('Uncaught Exception:', error);
 });
 
 process.on('unhandledRejection', (reason) => {
-  console.error('❌ Unhandled Rejection:', reason);
+  console.error('Unhandled Rejection:', reason);
 });

@@ -20,7 +20,7 @@ const initializeSocket = (server) => {
 
   io.on('connection', (socket) => {
     console.log(
-      `⚡ Client connected: ${socket.id}`
+      `Client connected: ${socket.id}`
     );
 
     socket.on('disconnect', () => {
@@ -32,7 +32,7 @@ const initializeSocket = (server) => {
 
   eventBus.on('metrics:ready', (payload) => {
     console.log(
-      '📡 metrics:ready received'
+      'metrics:ready received'
     );
 
     addMetric(payload);

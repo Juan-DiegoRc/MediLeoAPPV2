@@ -23,14 +23,14 @@ const generateMetric = () => {
 
 const startMetricsSimulation = () => {
   console.log(
-    '🧪 Metrics simulator started'
+    'Metrics simulator started'
   );
 
   setInterval(() => {
     const payload = generateMetric();
 
     console.log(
-      '📡 Simulated metric:',
+      'Simulated metric:',
       payload
     );
 
